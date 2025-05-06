@@ -23,3 +23,12 @@ class TaskRepository:
             task_schemas = [STask.model_validate(task_model)
                              for task_model in task_models]  # convert to PyD schemas
             return task_schemas
+
+    @classmethod
+    async def find_one_by_id(cls, ness_id) -> STask:
+        async with new_session() as session:
+            query = select(TaskOrm).filter(TaskOrm.id == ness_id)
+            result = await session.execute(query)
+            ness_task_model = result.scalars().one()
+            ness_task_schema = STask.model_validate(ness_task_model) # convert to PyD schemas
+            return ness_task_schema
