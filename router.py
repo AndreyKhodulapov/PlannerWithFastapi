@@ -24,7 +24,7 @@ async def get_all_tasks() -> list[STask]:
     return tasks
 
 @router.get("/{task_id}")
-async def get_all_tasks(task_id: int) -> STask:
+async def get_one_task(task_id: int) -> STask:
     try:
         task = await TaskRepository.find_one_by_id(task_id)
         return task
